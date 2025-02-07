@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frd_gallery/pages/profile_page.dart';
 import 'gallery_page.dart';
 import 'favorites_page.dart';
 import 'settings_page.dart';
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const GalleryPage(),
     const FavoritesPage(),
+    const ProfilePage(),
     const SettingsPage(),
   ];
 
@@ -29,24 +31,33 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library),
-            label: 'Gallery',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-      ),
+     bottomNavigationBar: BottomNavigationBar(
+  type: BottomNavigationBarType.fixed, // Tambahkan ini
+  backgroundColor: Colors.white,
+  selectedItemColor: Colors.black,
+  unselectedItemColor: Colors.grey, // Opsional, untuk warna ikon tidak terpilih
+  currentIndex: _selectedIndex,
+  onTap: _onItemTapped,
+  items: const [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home_outlined),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.favorite),
+      label: 'Favorites',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.person_outline_sharp),
+      label: 'profile',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.settings),
+      label: 'Settings',
+    ),
+  ],
+),
+
     );
   }
 }
