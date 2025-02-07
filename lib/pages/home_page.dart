@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       label: 'profile',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
+      icon: Icon(Icons.more_rounded),
       label: 'Settings',
     ),
   ],

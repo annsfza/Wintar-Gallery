@@ -21,7 +21,7 @@ class _GalleryPageState extends State<GalleryPage> {
   bool _isSelectionMode = false;
   Set<int> _selectedImages = {};
   final Map<int, Size> _imageSizes = {};
-  Set<int> _favoriteImages = {}; // Add this line to track favorite images
+  Set<int> _favoriteImages = {};
 
   @override
   void initState() {
@@ -33,6 +33,25 @@ class _GalleryPageState extends State<GalleryPage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+    void _showSuccessSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   void _toggleSelectionMode(int id) {
@@ -67,6 +86,9 @@ class _GalleryPageState extends State<GalleryPage> {
       _selectedImages.clear();
       _isSelectionMode = false;
     });
+    
+    // Show success message
+    _showSuccessSnackbar('Images added to favorites successfully');
   }
 
   Future<void> _deleteSelectedImages() async {
@@ -77,15 +99,12 @@ class _GalleryPageState extends State<GalleryPage> {
         _isLoading = true;
       });
 
-      // Create a copy of selected images before deletion
       final imagesToDelete = Set<int>.from(_selectedImages);
 
-      // Delete from database
       for (int id in imagesToDelete) {
         await DatabaseHelper.instance.deleteImage(id);
       }
 
-      // Update UI immediately
       setState(() {
         _imageFileList
             .removeWhere((image) => imagesToDelete.contains(image['id']));
@@ -93,6 +112,9 @@ class _GalleryPageState extends State<GalleryPage> {
         _isSelectionMode = false;
         _isLoading = false;
       });
+
+      // Show success message
+      _showSuccessSnackbar('Images deleted successfully');
     } catch (e) {
       print('Error deleting images: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -153,13 +175,9 @@ class _GalleryPageState extends State<GalleryPage> {
         for (var pickedFile in pickedFiles) {
           final imageFile = File(pickedFile.path);
           final date = DateTime.now();
-          // Simpan gambar dan dapatkan ID-nya
           final id = await DatabaseHelper.instance.insertImage(imageFile, date);
-
-          // Baca file gambar sebagai bytes
           final bytes = await imageFile.readAsBytes();
 
-          // Tambahkan gambar baru ke list temporary
           newImages.add({
             'id': id,
             'image': bytes,
@@ -167,12 +185,13 @@ class _GalleryPageState extends State<GalleryPage> {
           });
         }
 
-        // Update state dengan gambar baru
         setState(() {
-          // Tambahkan gambar baru ke awal list
           _imageFileList = [...newImages, ..._imageFileList];
           _isLoading = false;
         });
+
+        // Show success message
+        _showSuccessSnackbar('Images added successfully');
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -288,6 +307,7 @@ class _GalleryPageState extends State<GalleryPage> {
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           _isSelectionMode ? '${_selectedImages.length} Selected' : 'Home',
         ),
