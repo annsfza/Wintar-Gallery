@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frd_gallery/helpers/database_helper.dart';
-import 'package:frd_gallery/pages/home_page.dart';
-import 'package:frd_gallery/pages/register_page.dart';
+import 'package:Wintar_Gallery/helpers/database_helper.dart';
+import 'package:Wintar_Gallery/pages/home_page.dart';
+import 'package:Wintar_Gallery/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:frd_gallery/pages/detail_image.dart';
+import 'package:Wintar_Gallery/pages/detail_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../helpers/database_helper.dart';

@@ -1,4 +1,4 @@
-package com.example.frd_gallery
+package com.example.Wintar_Gallery
 
 import io.flutter.embedding.android.FlutterActivity
 

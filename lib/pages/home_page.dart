@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frd_gallery/pages/profile_page.dart';
+import 'package:Wintar_Gallery/pages/profile_page.dart';
 import 'gallery_page.dart';
 import 'favorites_page.dart';
 import 'settings_page.dart';

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:frd_gallery/helpers/database_helper.dart';
+import 'package:Wintar_Gallery/helpers/database_helper.dart';
 
 class DetailImageFavoritePage extends StatelessWidget {
   final Uint8List imageBytes;

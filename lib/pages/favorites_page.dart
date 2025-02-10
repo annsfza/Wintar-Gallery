@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:frd_gallery/helpers/database_helper.dart';
+import 'package:Wintar_Gallery/helpers/database_helper.dart';
 import 'detail_image_favorite.dart';  // Import the Detail Image page
 
 class FavoritesPage extends StatefulWidget {
