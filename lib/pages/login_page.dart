@@ -76,13 +76,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.yellow.shade900, Colors.yellow.shade700],
-          ),
-        ),
+        decoration: BoxDecoration(color: Colors.white),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -90,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.photo_library_rounded, size: 100, color: Colors.white),
+                  Icon(Icons.photo_library_rounded, size: 100, color: Colors.black),
                   SizedBox(height: 20),
                   Text(
-                    "Gallery App",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+                    "Gallery Wintar",
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                   SizedBox(height: 40),
                   Card(
@@ -123,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       "Belum punya akun? Daftar",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                   ),
                 ],
@@ -140,12 +134,13 @@ class _LoginPageState extends State<LoginPage> {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon),
+        prefixIcon: Icon(icon, color: Colors.black),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         filled: true,
-        fillColor: Colors.grey[100],
+        fillColor: Colors.white,
       ),
       obscureText: isPassword,
+      style: TextStyle(color: Colors.black),
     );
   }
 
@@ -156,12 +151,12 @@ class _LoginPageState extends State<LoginPage> {
       child: ElevatedButton(
         onPressed: _isLoading ? null : _loginUser,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.yellow.shade800,
+          backgroundColor: Colors.black,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
         child: _isLoading
             ? CircularProgressIndicator(color: Colors.white)
-            : Text("Login", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            : Text("Login", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
     );
   }

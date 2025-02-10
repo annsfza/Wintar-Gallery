@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:crypto/crypto.dart';
@@ -68,7 +69,10 @@ class DatabaseHelper {
       );
 
       if (existingUser.isNotEmpty) {
-        return {'success': false, 'message': 'Username or email already exists'};
+        return {
+          'success': false,
+          'message': 'Username or email already exists'
+        };
       }
 
       final hashedPassword = _hashPassword(password);
@@ -79,9 +83,16 @@ class DatabaseHelper {
         'password': hashedPassword,
       });
 
-      return {'success': true, 'message': 'Registration successful', 'userId': id};
+      return {
+        'success': true,
+        'message': 'Registration successful',
+        'userId': id
+      };
     } catch (e) {
-      return {'success': false, 'message': 'Registration failed: ${e.toString()}'};
+      return {
+        'success': false,
+        'message': 'Registration failed: ${e.toString()}'
+      };
     }
   }
 
@@ -104,7 +115,17 @@ class DatabaseHelper {
         return {'success': false, 'message': 'Invalid username or password'};
       }
 
-      return {'success': true, 'message': 'Login successful', 'user': results.first};
+      final userId = results.first['id'] as int;
+
+      // Simpan userId ke SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('userId', userId);
+
+      return {
+        'success': true,
+        'message': 'Login successful',
+        'user': results.first
+      };
     } catch (e) {
       return {'success': false, 'message': 'Login failed: ${e.toString()}'};
     }
@@ -162,5 +183,33 @@ class DatabaseHelper {
       whereArgs: [1],
       columns: ['id', 'image', 'date'],
     );
+  }
+
+  // Ambil data user untuk halaman profil
+  Future<Map<String, dynamic>?> getUserProfile(int userId) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'users',
+      columns: ['name', 'username', 'email'],
+      where: 'id = ?',
+      whereArgs: [userId],
+    );
+
+    if (result.isNotEmpty) {
+      return result.first;
+    }
+    return null;
+  }
+
+  // Ambil userId dari SharedPreferences
+  Future<int?> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('userId');
+  }
+
+  // Logout user
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId');
   }
 }
