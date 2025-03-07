@@ -1,4 +1,4 @@
-# frd_gallery
+# Wintar Gallery
 
 A new Flutter project.
 
